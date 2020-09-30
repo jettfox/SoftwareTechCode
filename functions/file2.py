@@ -1,1 +1,0 @@
-#A function that can acheive: For a user-selected period, produce a chart to show the number of accidents in each hour of the day (on average).
