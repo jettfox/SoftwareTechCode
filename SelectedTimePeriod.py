@@ -9,7 +9,7 @@ def select_Time_Period(SelDate, EndDate):
         fulldata['Year'][line] = fulldata['ACCIDENT_DATE'][line].split('/')[2]
         fulldata['Month'][line] = fulldata['ACCIDENT_DATE'][line].split('/')[1]
         fulldata['Day'][line] = fulldata['ACCIDENT_DATE'][line].split('/')[0]
-        if(line % 749 == 0):
+        if(line % (749*5) == 0):
             print(f'{line//749}%')
     
     StartYear = SelDate.split('/')[0]
