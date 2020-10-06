@@ -2,6 +2,9 @@ import pandas as pd
 from file_loader import fileloader
 fulldata = fileloader()
 def select_Time_Period(SelDate, EndDate):
+    fulldata['Year'] = fulldata['ACCIDENT_DATE']
+    fulldata['Month'] = fulldata['ACCIDENT_DATE']
+    fulldata['Day'] = fulldata['ACCIDENT_DATE']
     for line in range(len(fulldata['ACCIDENT_DATE'])):
         fulldata['Year'][line] = fulldata['ACCIDENT_DATE'][line].split('/')[2]
         fulldata['Month'][line] = fulldata['ACCIDENT_DATE'][line].split('/')[1]

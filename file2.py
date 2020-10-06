@@ -4,7 +4,7 @@ from SelectedTimePeriod import select_Time_Period
     
 SelDate = input("input Start date YYYY/MM/DD: ")
 EndDate = input("input End date YYYY/MM/DD: ")
-data = select_Time_Period()
+data = select_Time_Period(SelDate, EndDate)
 
 def sortHourOfDay(data, name):
     data = data[[col for col in data]]
