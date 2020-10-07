@@ -1,20 +1,15 @@
 # For a user-selected period, (DONE)
 # E.G. animal, ped. (user entered)
 # Retrieve all accidents that contains a keyword In the DCA_CODE,
-
-from selectedtimeperiod import select_Time_Period
-data = select_Time_Period()
-
-Keyword = input('Enter Keyword: ')
-
-
-#%%
-
-for lineNo in range(len(data['DCA_CODE'])):
-    currkeywords = []
-    currCode = data['DCA_CODE'][lineNo]
-    currkeywords = currCode.split()
+from pandas import pandas as pd
+def DCACodePicker(data, Keyword):
+    data = data[[col for col in data]]
     
-    if (Keyword in currkeywords):
-        #savedata
-        print('placeholder code')
+    RelevantData = pd.DataFrame({'' : []})
+    for index, row in data.iterrows():
+        currkeywords = row['DCA_CODE']
+    
+        if (Keyword in currkeywords):
+            RelevantData = data.append(row , ignore_index=True)
+    
+    return RelevantData
