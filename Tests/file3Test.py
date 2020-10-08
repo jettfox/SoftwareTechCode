@@ -8,11 +8,11 @@ def DCACodePicker(data, Keyword):
             if (Keyword):
                 data = data[[col for col in data]]
                 RelevantData = pd.DataFrame({'' : []})
-                for index, row in data.iterrows():
-                    currkeywords = row['DCA_CODE']
+                #for index, row in data.iterrows():
+                    #currkeywords = row['DCA_CODE']
                 
-                    if (Keyword in currkeywords):
-                        RelevantData = data.append(row , ignore_index=True)
+                    #if (Keyword in currkeywords):
+                        #RelevantData = data.append(row , ignore_index=True)
                 
                 return 'Success'
             else:
@@ -22,4 +22,5 @@ def DCACodePicker(data, Keyword):
     elif (data == 'Invalid Date'):
         return 'Invalid Date'
     else:
-        return 'Unknow Error'
+        return 'Unknown Error'
+    
