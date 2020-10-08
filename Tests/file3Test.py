@@ -14,7 +14,7 @@ def DCACodePicker(data, Keyword):
                     if (Keyword in currkeywords):
                         RelevantData = data.append(row , ignore_index=True)
                 
-                return RelevantData
+                return 'Success'
             else:
                 return 'No Search Term Supplied'
         else:

@@ -5,10 +5,8 @@ from SelectedTimePeriod import select_Time_Period
 from file2 import sortHourOfDay
 from file3 import DCACodePicker
 data = fileloader()
-SelDate = input("input Start date YYYY/MM/DD: ")
-EndDate = input("input End date YYYY/MM/DD: ")
-Keyword = input('Enter Keyword: ')
-timedata = select_Time_Period(SelDate, EndDate)
+
+
 
 #alcoholTimeAnalizer(data,'DAY_OF_WEEK')
 #alcoholTimeAnalizer(data,'LIGHT_CONDITION')
@@ -36,5 +34,10 @@ timedata = select_Time_Period(SelDate, EndDate)
 #mapGenerator(data, 'HIT_RUN_FLAG', "2017")
 #mapGenerator(data, 'HIT_RUN_FLAG', "2018")
 
-#sortHourOfDay(timedata SelDate, EndDate)
-#DCACodePicker(timedata, Keyword)
+
+#SelDate = input('Enter Start Date (YYYY/MM/DD): ')
+#EndDate = input('Enter End Date (YYYY/MM/DD): ')
+#Keyword = input('Enter Keyword: ')
+#timedata = select_Time_Period(SelDate, EndDate)
+#print(sortHourOfDay(timedata, SelDate, EndDate))
+#print(DCACodePicker(timedata, Keyword))
