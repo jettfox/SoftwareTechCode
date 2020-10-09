@@ -1,5 +1,5 @@
 #A function that can acheive: Allow the user to analyse the impact of alcohol time in accidents� ie: trends over days, the relationship with dark street lights, etc.
-import matplotlib.pyplot as plt 
+import matplotlib.pyplot as plt
 import pandas
 import numpy as np
 #alcoholTimeAnalizer is the name of the 4th function that the program performs, it takes all of the data, and a name as inputs and creates 1 of 4 graphs based on alcohol time and the name input.
