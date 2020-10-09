@@ -4,11 +4,11 @@ from file_loader import fileloader
 from SelectedTimePeriod import select_Time_Period
 from sortHourDay import sortHourOfDay
 from DCACodePicker import DCACodePicker
-data = fileloader()
+#data = fileloader()
 
 
 
-alcoholTimeAnalizer(data,'DAY_OF_WEEK')
+#alcoholTimeAnalizer(data,'DAY_OF_WEEK')
 #alcoholTimeAnalizer(data,'LIGHT_CONDITION')
 #alcoholTimeAnalizer(data,'ALCOHOL_RELATED')
 #alcoholTimeAnalizer(data,'SEVERITY') 

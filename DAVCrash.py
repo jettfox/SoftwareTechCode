@@ -11,35 +11,35 @@ data = fl()
 class RightPanel(wx.Panel):
     def __init__(self, parent):
         wx.Panel.__init__(self, parent = parent)
-        panel = wx.Panel(self, -1)
-        self.figure = plt.figure()
-        #self.figureTest = self.figure.add_subplot(111)
-        #self.axes = self.figure.add_subplot(111)
-        self.canvas = PlotCanvas(panel)
-        self.canvas.Draw(ata(data, 'DAY_OF_WEEK'))
-        self.sizer = wx.BoxSizer(wx.VERTICAL)
+       # panel = wx.Panel(self, -1)
+      #  self.figure = plt.figure()
+     #   #self.figureTest = self.figure.add_subplot(111)
+    #    #self.axes = self.figure.add_subplot(111)
+   #     self.canvas = PlotCanvas(panel)
+  #      self.canvas.Draw(ata(data, 'DAY_OF_WEEK'))
+ #       self.sizer = wx.BoxSizer(wx.VERTICAL)
         #Add canvas to sizer
-        self.sizer.Add(self.canvas, 1, wx.EXPAND)
-        self.SetSizer(self.sizer)
+       # self.sizer.Add(self.canvas, 1, wx.EXPAND)
+       # self.SetSizer(self.sizer)
         
         
-    def draw(self):
-        alcTimeGraph = ata(data, 'DAY_OF_WEEK')
-        self.canvas.draw()
+#    def draw(self):
+  #      alcTimeGraph = ata(data, 'DAY_OF_WEEK')
+   #     self.canvas.draw()
         
-#    def alcTime(self, valString):
-#        print(f'{valString} We got here')
-#        alcTimeGraph = 111
-#        if (valString == 'DAY_OF_WEEK'):
-#            alcTimeGraph = ata(data, 'DAY_OF_WEEK')
-#        elif (valString == 'LIGHT_CONDITION'):
-#            alcTimeGraph = ata(data, 'LIGHT_CONDITION')
-#        elif (valString == 'ALCOHOL_RELATED'):
-#            alcTimeGraph = ata(data, 'ALCOHOL_RELATED')
-#        elif (valString == 'SEVERITY'):
-#            alcTimeGraph = ata(data, 'SEVERITY')
-#        print(alcTimeGraph)
-#        return self.figureTest.plot(alcTimeGraph)
+ #   def alcTime(self, valString):
+  #      print(f'{valString} We got here')
+   #     alcTimeGraph = 111
+    #    if (valString == 'DAY_OF_WEEK'):
+     #       ata(data, 'DAY_OF_WEEK')
+      #  elif (valString == 'LIGHT_CONDITION'):
+       #     alcTimeGraph = ata(data, 'LIGHT_CONDITION')
+        #elif (valString == 'ALCOHOL_RELATED'):
+        #    alcTimeGraph = ata(data, 'ALCOHOL_RELATED')
+        #elif (valString == 'SEVERITY'):
+        #    alcTimeGraph = ata(data, 'SEVERITY')
+        #print(alcTimeGraph)
+        #return self.figureTest.plot(alcTimeGraph)
     
     
         
@@ -114,13 +114,13 @@ class LeftPanel(wx.Panel):
         val = self.func3Choice.GetSelection()
         valString = ''
         if (val == 0):
-            valString = 'DAY_OF_WEEK'
+            ata(data, 'DAY_OF_WEEK')
         elif (val == 1):
-            valString = 'LIGHT_CONDITION'
+            ata(data, 'LIGHT_CONDITION')
         elif (val == 2):
-            valString = 'ALCOHOL_RELATED'
+            ata(data, 'ALCOHOL_RELATED')
         elif (val == 3):
-            valString = 'SEVERITY'
+            ata(data, 'SEVERITY')
             
         #Call function on right panel to draw graph
         self.graph.alcTime(valString)
@@ -137,7 +137,7 @@ class LeftPanel(wx.Panel):
         
 class Main(wx.Frame):
     def __init__(self):
-        wx.Frame.__init__(self, parent=None, title="DAVCrash", size=(1100, 900))
+        wx.Frame.__init__(self, parent=None, title="DAVCrash", size=(500, 500))
         #Create menu bar
         self.menuBarMain = wx.MenuBar(0)
         self.menuFile = wx.Menu()
