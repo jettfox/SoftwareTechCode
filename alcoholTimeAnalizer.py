@@ -2,6 +2,7 @@
 import matplotlib.pyplot as plt 
 import pandas
 import numpy as np
+#alcoholTimeAnalizer is the name of the 4th function that the program performs, it takes all of the data, and a name as inputs and creates 1 of 4 graphs based on alcohol time and the name input.
 def alcoholTimeAnalizer(data, name):
     if (type(data) == pandas.core.frame.DataFrame):
         data = data[[col for col in data]]
@@ -64,6 +65,7 @@ def alcoholTimeAnalizer(data, name):
                 fig.tight_layout()
                 plt.show()
                 return 'Success'
+            #these other ifs work the same as above but with a different collum being targeted, it would be a waste to comment each one
             elif (name == 'LIGHT_CONDITION'):
                 trueBarData = {'Day': 0, 'Street lights on': 0, 'Dusk/Dawn': 0, 'No street lights': 0, 'Unk.': 0}
                 falseBarData = {'Day': 0, 'Street lights on': 0, 'Dusk/Dawn': 0, 'No street lights': 0, 'Unk.': 0}

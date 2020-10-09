@@ -2,6 +2,8 @@
 import matplotlib.pyplot as plt
 import pandas
 import numpy as np
+#alcoholTimeAnalizer is the name of the 4th function that the program performs, it takes all of the data, and a name as inputs and creates 1 of 4 graphs based on alcohol time and the name input.
+#the graphs have been removed for testing purposes
 def alcoholTimeAnalizer(data, name):
     if (type(data) == pandas.core.frame.DataFrame):
         data = data[[col for col in data]]
@@ -46,23 +48,7 @@ def alcoholTimeAnalizer(data, name):
                             trueBarData["Sun"] +=1
                         else:
                             falseBarData["Sun"] +=1
-                labels = trueBarData.keys()
-                true = trueBarData.values()
-                false = falseBarData.values()
-                x = np.arange(len(labels))
-                width = 0.2
-                fig, ax = plt.subplots()
-                rects1 = ax.bar(x - width/2, true, width, label='True', color='#0F084B')
-                rects2 = ax.bar(x + width/2, false, width, label='False', color='#3AA7A3')
-                
-                ax.set_ylabel('Crashes')
-                ax.set_xlabel('Days of the Week')
-                ax.set_title('Crashes by Alcohol Time')
-                ax.set_xticks(x)
-                ax.set_xticklabels(labels)
-                ax.legend()
-                fig.tight_layout()
-                plt.show()
+                #Graph was here
                 return 'Success'
             elif (name == 'LIGHT_CONDITION'):
                 trueBarData = {'Day': 0, 'Street lights on': 0, 'Dusk/Dawn': 0, 'No street lights': 0, 'Unk.': 0}
@@ -93,23 +79,7 @@ def alcoholTimeAnalizer(data, name):
                             trueBarData["Unk."] +=1
                         else:
                             falseBarData["Unk."] +=1
-                labels = trueBarData.keys()
-                true = trueBarData.values()
-                false = falseBarData.values()
-                x = np.arange(len(labels))
-                width = 0.2
-                fig, ax = plt.subplots()
-                rects1 = ax.bar(x - width/2, true, width, label='True', color='#0F084B')
-                rects2 = ax.bar(x + width/2, false, width, label='False', color='#3AA7A3')
-                
-                ax.set_ylabel('Crashes')
-                ax.set_xlabel('Light Level')
-                ax.set_title('Crashes by Alcohol Time')
-                ax.set_xticks(x)
-                ax.set_xticklabels(labels)
-                ax.legend()
-                fig.tight_layout()
-                plt.show()
+                #Graph was here
                 return 'Success'
             elif (name == 'ALCOHOL_RELATED'):
                 trueBarData = {'Yes': 0, 'No': 0}
@@ -125,23 +95,7 @@ def alcoholTimeAnalizer(data, name):
                             trueBarData["No"] +=1
                         else:
                             falseBarData["No"] +=1
-                labels = trueBarData.keys()
-                true = trueBarData.values()
-                false = falseBarData.values()
-                x = np.arange(len(labels))
-                width = 0.2
-                fig, ax = plt.subplots()
-                rects1 = ax.bar(x - width/2, true, width, label='True', color='#0F084B')
-                rects2 = ax.bar(x + width/2, false, width, label='False', color='#3AA7A3')
-                
-                ax.set_ylabel('Crashes')
-                ax.set_xlabel('Alcohol Related')
-                ax.set_title('Crashes by Alcohol Time')
-                ax.set_xticks(x)
-                ax.set_xticklabels(labels)
-                ax.legend()
-                fig.tight_layout()
-                plt.show()
+                #Graph was here
                 return 'Success'
             elif (name == 'SEVERITY'):
                 trueBarData = {'Other': 0, 'Serious': 0, 'Fatal': 0, 'None': 0}
@@ -167,23 +121,7 @@ def alcoholTimeAnalizer(data, name):
                             trueBarData["None"] +=1
                         else:
                             falseBarData["None"] +=1
-                labels = trueBarData.keys()
-                true = trueBarData.values()
-                false = falseBarData.values()
-                x = np.arange(len(labels))
-                width = 0.2
-                fig, ax = plt.subplots()
-                rects1 = ax.bar(x - width/2, true, width, label='True', color='#0F084B')
-                rects2 = ax.bar(x + width/2, false, width, label='False', color='#3AA7A3')
-                
-                ax.set_ylabel('Crashes')
-                ax.set_xlabel('Injury Type')
-                ax.set_title('Crashes by Alcohol Time')
-                ax.set_xticks(x)
-                ax.set_xticklabels(labels)
-                ax.legend()
-                fig.tight_layout()
-                plt.show()
+                #Graph was here
                 return 'Success'
             else:
                 return 'Incorrect Data or Name'

@@ -1,14 +1,14 @@
 from alcoholTimeAnalizer import alcoholTimeAnalizer
 from mapGenerator import mapGenerator
 from file_loader import fileloader
-from SelectedTimePeriod2 import select_Time_Period
-from file2 import sortHourOfDay
-from file3 import DCACodePicker
+from SelectedTimePeriod import select_Time_Period
+from sortHourDay import sortHourOfDay
+from DCACodePicker import DCACodePicker
 data = fileloader()
 
 
 
-#alcoholTimeAnalizer(data,'DAY_OF_WEEK')
+alcoholTimeAnalizer(data,'DAY_OF_WEEK')
 #alcoholTimeAnalizer(data,'LIGHT_CONDITION')
 #alcoholTimeAnalizer(data,'ALCOHOL_RELATED')
 #alcoholTimeAnalizer(data,'SEVERITY') 
@@ -35,10 +35,10 @@ data = fileloader()
 #mapGenerator(data, 'HIT_RUN_FLAG', "2018")
 
 
-SelDate = input('Enter Start Date (YYYY/MM/DD): ')
-EndDate = input('Enter End Date (YYYY/MM/DD): ')
-Keyword = input('Enter Keyword: ')
-timedata = select_Time_Period(SelDate, EndDate)
-#print(sortHourOfDay(timedata, SelDate, EndDate))
-data = DCACodePicker(timedata, Keyword)
-print(data['DCA_CODE'],data['ACCIDENT_DATE'])
+#StartDate = input('Enter Start Date (YYYY/MM/DD): ')
+#EndDate = input('Enter End Date (YYYY/MM/DD): ')
+#Keyword = input('Enter Keyword: ')
+#timedata = select_Time_Period(StartDate, EndDate)
+#sortHourOfDay(timedata)
+#data = DCACodePicker(timedata, Keyword)
+#print(data['DCA_CODE'],data['ACCIDENT_DATE'])

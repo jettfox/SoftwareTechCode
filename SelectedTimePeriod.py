@@ -1,16 +1,18 @@
 import pandas as pd
+from datetime import datetime as dt
 from file_loader import fileloader
 fulldata = fileloader()
-def select_Time_Period(SelDate, EndDate):
+def select_Time_Period(StartDate, EndDate):
+    #this error checking makes sure that the date is valid
     if (type(fulldata) == pd.core.frame.DataFrame):
-        if ((SelDate and EndDate) == False):
+        if ((StartDate and EndDate) == False):
             return 'Invalid Date'
-        if (len(SelDate.split('/')) != 3):
+        if (len(StartDate.split('/')) != 3):
             return 'Invalid Date'
         else:
             valid = True
             for i in range(3):
-                if (SelDate.split('/')[i].isdigit() == False):
+                if (StartDate.split('/')[i].isdigit() == False):
                     valid = False
             if(valid == False):
                 return 'Invalid Date'
@@ -24,71 +26,16 @@ def select_Time_Period(SelDate, EndDate):
                     valid = False
             if(valid == False):
                 return 'Invalid date'
-        
-        
-        fulldata['Year'] = fulldata['ACCIDENT_DATE']
-        fulldata['Month'] = fulldata['ACCIDENT_DATE']
-        fulldata['Day'] = fulldata['ACCIDENT_DATE']
-        for line in range(len(fulldata['ACCIDENT_DATE'])):
-            fulldata['Year'][line] = fulldata['ACCIDENT_DATE'][line].split('/')[2]
-            fulldata['Month'][line] = fulldata['ACCIDENT_DATE'][line].split('/')[1]
-            fulldata['Day'][line] = fulldata['ACCIDENT_DATE'][line].split('/')[0]
-            if(line % (749*5) == 0):
-                print(f'{line//749}%')
-        
-        StartYear = SelDate.split('/')[0]
-        StartMonth = SelDate.split('/')[1]
-        StartDay = SelDate.split('/')[2]
-        EndYear = EndDate.split('/')[0]
-        EndMonth = EndDate.split('/')[1]
-        EndDay = EndDate.split('/')[2]
-        
-        toconcat = []
-        if (StartYear != EndYear):
-            #middle years 
-            df0 = fulldata.loc[fulldata['Year'] > StartYear]
-            df0 = df0.loc[df0['Year'] < EndYear]
-            toconcat.append(df0)
-            # first year
-            df1 = fulldata.loc[fulldata['Year'] == StartYear]
-            # first month
-            df2 = df1.loc[df1['Month'] == StartMonth]
-            df2 = df2.loc[df2['Day'] >= StartDay] 
-            df1 = df1.loc[df1['Month'] > StartMonth]
-            toconcat.append(df1)
-            toconcat.append(df2)
-            # last year
-            df3 = fulldata.loc[fulldata['Year'] == EndYear]
-            # first month
-            df4 = df3.loc[df3['Month'] == EndMonth]
-            df4 = df4.loc[df4['Day'] <= EndDay]    
-            df3 = df3.loc[df3['Month'] < EndMonth]
-            toconcat.append(df3)
-            toconcat.append(df4)
-            
-        else:
-            df1 = fulldata.loc[fulldata['Year'] == StartYear]
-            if (StartMonth != EndMonth):
-                #Start
-                df2 = df1.loc[df1['Month'] == StartMonth]
-                df2 = df2.loc[df2['Day'] >= StartDay] 
-                df1 = df1.loc[df1['Month'] > StartMonth]
-                toconcat.append(df2)
-                #End
-                df3 = df1.loc[df1['Month'] == EndMonth]
-                df3 = df3.loc[df3['Day'] <= EndDay]    
-                df1 = df1.loc[df1['Month'] < EndMonth]
-                toconcat.append(df1)
-                toconcat.append(df3)
-            else:
-                df1 = df1.loc[df1['Month'] == StartMonth]
-                #Start
-                df1 = df1.loc[df1['Day'] >= StartDay] 
-                #End
-                df1 = df1.loc[df1['Day'] <= EndDay]   
-                toconcat.append(df1)
-                
-        df = pd.concat(toconcat)
-        return df
-    else:
-        return 'Invalid File'
+    #this takes the full data from the database and converts the accident date from a string to an actual datetime.
+    fulldata['ACCIDENT_DATE'] = pd.to_datetime(fulldata['ACCIDENT_DATE'])
+    #this converts the input start and end dates into datetime as well
+    StartDate = dt.strptime(StartDate,'%d/%m/%Y')
+    EndDate = dt.strptime(EndDate,'%d/%m/%Y')
+    #this uses the pandas filter feature to makes the df dateframe with only the data that has an accident date above or equal to start date and below or equal to end date
+    df = fulldata.loc[(fulldata['ACCIDENT_DATE'] >= StartDate)&(fulldata['ACCIDENT_DATE'] <= EndDate)]
+    #this converts the format of the new df dateframe accident date from datetime format to dd/mm/yyyy format
+    df['ACCIDENT_DATE'] = df['ACCIDENT_DATE'].dt.strftime('%d/%m/%Y')
+    #this converts it back into a string like it was originally as to keep the data constistant with orginal just filtered not changed
+    df['ACCIDENT_DATE'] = df['ACCIDENT_DATE'].astype(str)
+    return df
+
