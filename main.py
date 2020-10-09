@@ -6,7 +6,8 @@ from sortHourDay import sortHourOfDay
 from DCACodePicker import DCACodePicker
 #data = fileloader()
 
-
+timedata = select_Time_Period('01/04/2015', '04/06/2016')
+sortHourOfDay(timedata)
 
 #alcoholTimeAnalizer(data,'DAY_OF_WEEK')
 #alcoholTimeAnalizer(data,'LIGHT_CONDITION')
@@ -35,10 +36,7 @@ from DCACodePicker import DCACodePicker
 #mapGenerator(data, 'HIT_RUN_FLAG', "2018")
 
 
-#StartDate = input('Enter Start Date (YYYY/MM/DD): ')
-#EndDate = input('Enter End Date (YYYY/MM/DD): ')
 #Keyword = input('Enter Keyword: ')
-#timedata = select_Time_Period(StartDate, EndDate)
-#sortHourOfDay(timedata)
+
 #data = DCACodePicker(timedata, Keyword)
 #print(data['DCA_CODE'],data['ACCIDENT_DATE'])

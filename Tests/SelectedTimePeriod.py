@@ -26,12 +26,6 @@ def select_Time_Period(StartDate, EndDate):
                     valid = False
             if(valid == False):
                 return 'Invalid date'
-        if (len(StartDate.split('/')[0]) != 2):
-            return 'Invalid Date'
-        if (len(StartDate.split('/')[1]) != 2):
-            return 'Invalid Date'
-        if (len(StartDate.split('/')[2]) != 4):
-            return 'Invalid Date'
     #this takes the full data from the database and converts the accident date from a string to an actual datetime.
     fulldata['ACCIDENT_DATE'] = pd.to_datetime(fulldata['ACCIDENT_DATE'])
     #this converts the input start and end dates into datetime as well

@@ -25,12 +25,18 @@ def select_Time_Period(StartDate, EndDate):
                 if (EndDate.split('/')[i].isdigit() == False):
                     valid = False
             if(valid == False):
-                return 'Invalid date'
+                return 'Invalid Date'
         if (len(StartDate.split('/')[0]) != 2):
             return 'Invalid Date'
         if (len(StartDate.split('/')[1]) != 2):
             return 'Invalid Date'
         if (len(StartDate.split('/')[2]) != 4):
+            return 'Invalid Date'
+        if (len(EndDate.split('/')[0]) != 2):
+            return 'Invalid Date'
+        if (len(EndDate.split('/')[1]) != 2):
+            return 'Invalid Date'
+        if (len(EndDate.split('/')[2]) != 4):
             return 'Invalid Date'
     #this takes the full data from the database and converts the accident date from a string to an actual datetime.
     fulldata['ACCIDENT_DATE'] = pd.to_datetime(fulldata['ACCIDENT_DATE'])
@@ -43,5 +49,5 @@ def select_Time_Period(StartDate, EndDate):
     df['ACCIDENT_DATE'] = df['ACCIDENT_DATE'].dt.strftime('%d/%m/%Y')
     #this converts it back into a string like it was originally as to keep the data constistant with orginal just filtered not changed
     df['ACCIDENT_DATE'] = df['ACCIDENT_DATE'].astype(str)
-    return df
+    return 'Success'
 

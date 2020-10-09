@@ -1,7 +1,7 @@
 import unittest
 import pandas as pd
-from file3Test import DCACodePicker
-from SelectedTimePeriodTestVersion import select_Time_Period
+from DCACodePickerTestVersion import DCACodePicker
+from SelectedTimePeriod import select_Time_Period
 from file_loader import fileloader
 from file_loader import badfileLoader
 

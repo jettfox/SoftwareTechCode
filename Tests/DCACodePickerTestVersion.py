@@ -2,8 +2,6 @@
 # E.G. animal, ped. (use1r entered)
 # Retrieve all accidents that contains a keyword In the DCA_CODE,
 from pandas import pandas as pd
-from IPython.display import display 
-import matplotlib.pyplot as plt
 def DCACodePicker(data, Keyword):
     #check whether data is a dataframe
     if (type(data) == pd.core.frame.DataFrame):
@@ -22,7 +20,7 @@ def DCACodePicker(data, Keyword):
                     if (Keyword in currkeywords):
                         RelevantData = data.append(row , ignore_index=True)
                 
-                return RelevantData
+                return 'Success'
             else:
                 return 'No Search Term Supplied'
         else:

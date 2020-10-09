@@ -4,13 +4,19 @@ import pandas
 import numpy as np
 #alcoholTimeAnalizer is the name of the 4th function that the program performs, it takes all of the data, and a name as inputs and creates 1 of 4 graphs based on alcohol time and the name input.
 def alcoholTimeAnalizer(data, name):
+    #makes sure that the data is a dataframe
     if (type(data) == pandas.core.frame.DataFrame):
+        #this makes sure that the dataframe is formatted properly
         data = data[[col for col in data]]
         nRow, nCol = data.shape
+        #this check whether name input is a collumn in the dataframe
         if name in data:
+            #if the maptype is DAY_OF_WEEK then do this branch
             if (name == 'DAY_OF_WEEK'):
+                #these are the empty dicts that will filled with dataframe data
                 trueBarData = {'Mon': 0, 'Tues': 0, 'Wed': 0, 'Thurs': 0, 'Fri': 0, 'Sat': 0, 'Sun': 0}
                 falseBarData = {'Mon': 0, 'Tues': 0, 'Wed': 0, 'Thurs': 0, 'Fri': 0, 'Sat': 0, 'Sun': 0}
+                #this goes line by line in the dataframe to check whether collumn severity is set to a specified category and the for that is put in its corresponding dict
                 for index, row in data.iterrows():
                     if (row['DAY_OF_WEEK'] == "Monday"):
                         if (row['ALCOHOLTIME'] == "Yes"):
@@ -47,15 +53,17 @@ def alcoholTimeAnalizer(data, name):
                             trueBarData["Sun"] +=1
                         else:
                             falseBarData["Sun"] +=1
+                #this sets up variables that will be used in the bars
                 labels = trueBarData.keys()
                 true = trueBarData.values()
                 false = falseBarData.values()
                 x = np.arange(len(labels))
                 width = 0.2
+                #this sets up the ax plot that has subplots
                 fig, ax = plt.subplots()
                 rects1 = ax.bar(x - width/2, true, width, label='True', color='#0F084B')
                 rects2 = ax.bar(x + width/2, false, width, label='False', color='#3AA7A3')
-                
+                #this sets up all the labels and title stuff
                 ax.set_ylabel('Crashes')
                 ax.set_xlabel('Days of the Week')
                 ax.set_title('Crashes by Alcohol Time')
