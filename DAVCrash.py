@@ -26,9 +26,15 @@ try:
     from DCACodePicker import DCACodePicker as DCP
 except ImportError:
     raise ImportError("Failed to import DCACodePicker")
-
+import  os
+import pandas as pd
 #Declare data value from fileloader    
 data = fl()
+wildcard = "Python source (*.py)|*.py|"     \
+           "Compiled Python (*.pyc)|*.pyc|" \
+           "SPAM files (*.spam)|*.spam|"    \
+           "Egg file (*.egg)|*.egg|"        \
+           "All files (*.*)|*.*"
 
 class myGui(wx.Frame):
     def __init__(self, parent, id, title):
@@ -44,24 +50,21 @@ class myGui(wx.Frame):
         # File 'button' to menu bar
         self.menuBarMain.Append(self.menuFile, "File")
         # Menu about 'button'
-        self.menuItemFileAbout = wx.MenuItem(
-            self.menuFile, wx.ID_ANY, "About", "Details about this program.", wx.ITEM_NORMAL)
-        self.menuFile.Append(self.menuItemFileAbout)
+        menuAbout = self.menuFile.Append(wx.ID_ABOUT, "About", "This is a small Data Processing tool by Callum Beale, Caleb Davis, Jett Fox de Ruyter")
         # Menu help 'button'
-        self.menuItemFileHelp = wx.MenuItem(
-            self.menuFile, wx.ID_ANY, "Help", "Access documentation for this program", wx.ITEM_NORMAL)
-        self.menuFile.Append(self.menuItemFileHelp)
+        menuHelp = self.menuFile.Append(wx.ID_HELP, "Help", "See the documentation for help.")
         # Add divider line
         self.menuFile.AppendSeparator()
         # Menu exit 'button'
-        self.menuItemFileExit = wx.MenuItem(
-            self.menuFile, wx.ID_ANY, "Exit", "Exit DAVCrash", wx.ITEM_NORMAL)
-        self.menuFile.Append(self.menuItemFileExit)
-        # Set menubar
+        menuExit = self.menuFile.Append(wx.ID_EXIT, "Exit", "Close DAVCrash")
+        # # Set menubar
         self.SetMenuBar(self.menuBarMain)
         # Add status bar
         self.m_statusBar = self.CreateStatusBar(1, wx.STB_SIZEGRIP, wx.ID_ANY)
         
+        self.Bind(wx.EVT_MENU, self.OnAbout, menuAbout)
+        self.Bind(wx.EVT_MENU, self.OnHelp, menuHelp)
+        self.Bind(wx.EVT_MENU, self.OnExit, menuExit)
         panel = wx.Panel(self)
         # Main Frame setup
         FrameMainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -80,14 +83,14 @@ class myGui(wx.Frame):
         # Add title via text control & set a background colour
         # TODO Rename function1
         self.func1Title = wx.StaticText(
-            self.panelDef1, wx.ID_ANY, "function1", wx.DefaultPosition, wx.DefaultSize, wx.TE_CENTRE)
+            self.panelDef1, wx.ID_ANY, "Sort Accidents by Hour in Day", wx.DefaultPosition, wx.DefaultSize, wx.TE_CENTRE)
         self.func1Title.SetBackgroundColour(
             wx.SystemSettings.GetColour(wx.SYS_COLOUR_INACTIVECAPTION))
         # Expand title to full grid width
         sizerPanelDef1.Add(self.func1Title, 0, wx.ALL | wx.EXPAND, 5)
         # Add description of what this function will do
         # TODO Change description str (multiline)
-        self.func1Desc = wx.StaticText(self.panelDef1, wx.ID_ANY, "This dataset will generate a graph based upon whether a crash occured in a high alcohol time period.\n\nDay of the week: Number of crashes by day of the week.\n\nLight condition: Number of crashes related to light conditions.\n\nAlcohol related: Number of crashes where alcohol was related.\n\nSeverity: Crashes categories by the severity of the incident.", wx.DefaultPosition, wx.DefaultSize, wx.TE_MULTILINE)
+        self.func1Desc = wx.StaticText(self.panelDef1, wx.ID_ANY, "This function will generate a graph based upon whether a crash occured at\n\nwhat hour of the day. The user can input a start date and end date using the\n\nbelow inputs in dd/mm/yyyy format. This will limit data in the graph to\n\nbetween these dates.", wx.DefaultPosition, wx.DefaultSize, wx.TE_MULTILINE)
         self.func1Desc.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_INACTIVECAPTION))
         # Add function1 description to panelDef1
         sizerPanelDef1.Add(self.func1Desc, 0, wx.ALL | wx.EXPAND, 5)
@@ -95,9 +98,9 @@ class myGui(wx.Frame):
         sizerFunc1 = wx.BoxSizer(wx.HORIZONTAL)
         # Add function selector
         # TODO change input string names
-        self.func1Input1 = wx.TextCtrl(self.panelDef1, wx.ID_ANY, 'TODOInput1', wx.DefaultPosition, wx.DefaultSize)
+        self.func1Input1 = wx.TextCtrl(self.panelDef1, wx.ID_ANY, '01/01/2015', wx.DefaultPosition, wx.DefaultSize)
         sizerFunc1.Add(self.func1Input1, 0, wx.ALL, 5)
-        self.func1Input2 = wx.TextCtrl(self.panelDef1, wx.ID_ANY, 'TODOInput1', wx.DefaultPosition, wx.DefaultSize)
+        self.func1Input2 = wx.TextCtrl(self.panelDef1, wx.ID_ANY, '01/02/2015', wx.DefaultPosition, wx.DefaultSize)
         sizerFunc1.Add(self.func1Input2, 0, wx.ALL, 5)
         # Add selection button to execute the function
         self.func1Btn = wx.Button(self.panelDef1, wx.ID_ANY, 'Generate', wx.DefaultPosition, wx.DefaultSize, 5)
@@ -118,7 +121,7 @@ class myGui(wx.Frame):
         sizerPanelDef2 = wx.BoxSizer(wx.VERTICAL)
         # Function 2 title
         # TODO function 2 title change
-        self.function2Title = wx.StaticText(self.panelDef2, wx.ID_ANY, "function2",
+        self.function2Title = wx.StaticText(self.panelDef2, wx.ID_ANY, "DCA Code Data Retrieval",
           wx.DefaultPosition, wx.DefaultSize, wx.TE_CENTRE)
         # Function
         self.function2Title.SetBackgroundColour(
@@ -127,18 +130,18 @@ class myGui(wx.Frame):
         sizerPanelDef2.Add(self.function2Title, 0, wx.ALL | wx.EXPAND, 5)
         # Create function 2 description and add background colour
         # TODO function 2 description (multiline)
-        self.function2Desc = wx.StaticText(self.panelDef2, wx.ID_ANY, "This dataset will generate a graph based upon whether a crash occured in a high alcohol time period.\n\nDay of the week: Number of crashes by day of the week.\n\nLight condition: Number of crashes related to light conditions.\n\nAlcohol related: Number of crashes where alcohol was related.\n\nSeverity: Crashes categories by the severity of the incident.", wx.DefaultPosition, wx.DefaultSize, wx.TE_MULTILINE)
+        self.function2Desc = wx.StaticText(self.panelDef2, wx.ID_ANY, "This function will generate a new csv file based on the original but filtered\n\n by the date constraints in the first two iputs below and by the DCA CODES\n\ninputed in the third input below.", wx.DefaultPosition, wx.DefaultSize, wx.TE_MULTILINE)
         self.function2Desc.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_INACTIVECAPTION))
         # Add function 2 description into sizerFunc2
         sizerPanelDef2.Add(self.function2Desc, 0, wx.ALL | wx.EXPAND, 5)
         
         sizerFunc2 = wx.BoxSizer(wx.HORIZONTAL)
         # TODO change input names
-        self.func2Input1 = wx.TextCtrl(self.panelDef2, wx.ID_ANY, 'TODOInput1', wx.DefaultPosition, wx.DefaultSize)
+        self.func2Input1 = wx.TextCtrl(self.panelDef2, wx.ID_ANY, '01/01/2015', wx.DefaultPosition, wx.DefaultSize)
         sizerFunc2.Add(self.func2Input1, 0, wx.ALL, 5)
-        self.func2Input2 = wx.TextCtrl(self.panelDef2, wx.ID_ANY, 'TODOInput2', wx.DefaultPosition, wx.DefaultSize)
+        self.func2Input2 = wx.TextCtrl(self.panelDef2, wx.ID_ANY, '01/01/2016', wx.DefaultPosition, wx.DefaultSize)
         sizerFunc2.Add(self.func2Input2, 0, wx.ALL, 5)
-        self.func2Input3 = wx.TextCtrl(self.panelDef2, wx.ID_ANY, 'TODOInput3', wx.DefaultPosition, wx.DefaultSize)
+        self.func2Input3 = wx.TextCtrl(self.panelDef2, wx.ID_ANY, 'PED', wx.DefaultPosition, wx.DefaultSize)
         sizerFunc2.Add(self.func2Input3, 0, wx.ALL, 5)
         
         self.func2Btn = wx.Button(
@@ -164,7 +167,7 @@ class myGui(wx.Frame):
         
         sizerPanelDef3.Add(self.alcoholTimeTitle, 0, wx.ALL | wx.EXPAND, 5)
         
-        self.alcoholTimeDescription = wx.StaticText(self.panelDef3, wx.ID_ANY, "This dataset will generate a graph based upon whether a crash occured in a high alcohol time period.\n\nDay of the week: Number of crashes by day of the week.\n\nLight condition: Number of crashes related to light conditions.\n\nAlcohol related: Number of crashes where alcohol was related.\n\nSeverity: Crashes categories by the severity of the incident.", wx.DefaultPosition, wx.DefaultSize, wx.TE_MULTILINE)
+        self.alcoholTimeDescription = wx.StaticText(self.panelDef3, wx.ID_ANY, "This function will generate a graph based upon whether a crash occured\n\n in a high alcohol time period.\n\n Day of the week: Number of crashes by day of the week.\n\n Light condition: Number of crashes related to light conditions.\n\n Alcohol related: Number of crashes where alcohol was related.\n\n Severity: Crashes categories by the severity of the incident.", wx.DefaultPosition, wx.DefaultSize, wx.TE_MULTILINE)
         self.alcoholTimeDescription.SetBackgroundColour(wx.SystemSettings.GetColour(wx.SYS_COLOUR_INACTIVECAPTION))
         
         sizerPanelDef3.Add(self.alcoholTimeDescription, 0, wx.ALL | wx.EXPAND, 5)
@@ -206,7 +209,7 @@ class myGui(wx.Frame):
         
         sizerPanelDef4.Add(self.func4Title, 0, wx.ALL | wx.EXPAND, 5)
         
-        self.func4Desc = wx.StaticText(self.panelDef4, wx.ID_ANY, "This dataset will generate a map that presents the data based on the following selectable categories:\n\nSeverity: The severity of injuries sustained by perons involved in each incident.\n\nAlcohol related: If alcohol was a critical factor as a cause of the incident.\n\nHit and run: If the incident was classified as a hit and run.", wx.DefaultPosition, wx.DefaultSize, wx.TE_MULTILINE)
+        self.func4Desc = wx.StaticText(self.panelDef4, wx.ID_ANY, "This function will generate a map that presents the data based on the\n\nfollowing selectable categories:\n\nSeverity: The severity of injuries sustained by perons involved in each incident.\n\nAlcohol related: If alcohol was a critical factor as a cause of the incident.\n\nHit and run: If the incident was classified as a hit and run.\n\nThe data in the graph is limited to a one year period specified below.", wx.DefaultPosition, wx.DefaultSize, wx.TE_MULTILINE)
         self.func4Desc.SetBackgroundColour(
           wx.SystemSettings.GetColour(wx.SYS_COLOUR_INACTIVECAPTION))
         
@@ -255,13 +258,24 @@ class myGui(wx.Frame):
         # Show the App
         self.Show(True)
 
-    
+    def OnAbout(self, e):
+        dlg = wx.MessageDialog(self, "This is a small data analysis tool by Callum Beale, Caleb Davis, Jett Fox de Ruyter", "About")
+        dlg.ShowModal()
+        dlg.Destroy()
+
+    def OnHelp(self, e):
+        dlg = wx.MessageDialog(self, "See the documentation for help")
+        dlg.ShowModal()
+        dlg.Destroy()
+
+    def OnExit(self, e):
+        self.Close(True)
+
     def f1OnClick(self, event):
         # First text input value
         val = self.func1Input1.GetValue()
         # Second text input value
         val1 = self.func1Input2.GetValue()
-        print(val, val1)
         sHD(sTP(val, val1))
 
     def f2OnClick(self, event):
@@ -271,6 +285,20 @@ class myGui(wx.Frame):
         val1 = self.func2Input2.GetValue()
         # Third text input value
         val2 = self.func2Input3.GetValue()
+        try:
+            dlg = wx.FileDialog(self, "Save to file:", ".", "", "Text (*.csv)|*.csv", wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT)
+            if (dlg.ShowModal() == wx.ID_OK):
+                self.filename = dlg.GetFilename()
+                self.dirname = dlg.GetDirectory()
+                f = open(os.path.join(self.dirname, self.filename), 'w')
+                df = DCP(sTP(val, val1), val2)
+                df.to_csv (f, index = False, header=True)
+                f.close()
+            dlg.Destroy()
+        except:
+            pass
+
+        
 
 
     def f3OnClick(self, event):

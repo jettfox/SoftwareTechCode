@@ -61,6 +61,7 @@ def mapGenerator(data, mapType, year):
                     ax.legend()
                     #this shows the scatter plot with the image as the background
                     ax.imshow(imgMap, zorder=0, extent = limits, aspect= 'equal')
+                    plt.show()
                     return 'Success'
             #these other ifs work the same as above but with a different collum being targeted, it would be a waste to comment each one
             elif (mapType == 'ALCOHOL_RELATED'):
@@ -91,6 +92,7 @@ def mapGenerator(data, mapType, year):
                     ax.set_xlabel('Longitude')
                     ax.legend()
                     ax.imshow(imgMap, zorder=0, extent = limits, aspect= 'equal')
+                    plt.show()
                     return 'Success'
             elif (mapType == 'HIT_RUN_FLAG'):
                 yLong = []
@@ -119,6 +121,7 @@ def mapGenerator(data, mapType, year):
                     ax.set_xlabel('Longitude')
                     ax.legend()
                     ax.imshow(imgMap, zorder=0, extent = limits, aspect= 'equal')
+                    plt.show()
                     return 'Success'
             else:
                 return 'Incorrect Data or mapType'

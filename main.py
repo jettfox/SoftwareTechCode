@@ -6,8 +6,8 @@ from sortHourDay import sortHourOfDay
 from DCACodePicker import DCACodePicker
 #data = fileloader()
 
-timedata = select_Time_Period('01/04/2015', '04/06/2016')
-sortHourOfDay(timedata)
+# timedata = select_Time_Period('01/04/2015', '04/06/2016')
+# sortHourOfDay(timedata)
 
 #alcoholTimeAnalizer(data,'DAY_OF_WEEK')
 #alcoholTimeAnalizer(data,'LIGHT_CONDITION')
